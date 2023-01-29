@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Purchase;
 use App\Models\UserCart;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserCartController extends Controller
@@ -79,7 +80,9 @@ class UserCartController extends Controller
     public function purchase(Request $request)
     {
         // Create Purchase
-        $purchase = $request->user()->purchases()->create();
+        $purchase = $request->user()->purchases()->create([
+            'purchased_at' => Carbon::now('Asia/Jakarta')
+        ]);
 
         $items = $request->user()->shopping_cart()->with('product')->get();
 
